@@ -3,6 +3,7 @@ library(data.table)
 library(jsonlite)
 library(logger)
 library(checkmate)
+log_threshold(TRACE)
 
 #### push to github
 
@@ -11,6 +12,7 @@ log_info('Number of Bitcoins: {BITCOINS}')
 
 usdhuf <- fromJSON('https://api.exchangeratesapi.io/latest?base=USD&symbols=HUF')$rates$HUF
 log_info('The value of 1 USD in HUF: {usdhuf}')
+log_eval(usdhuf)
 assert_number(usdhuf, lower = 250, upper = 500)
 
 
@@ -30,6 +32,8 @@ get_bitcoin_price()
 
 btcusdt <-  binance_coins_prices()[symbol == 'BTC', usd]
 log_info('The value of 1 Bitcoin in USD: {btcusdt}')
+log_eval(btcusdt)
 assert_number(btcusdt, lower = 1000)
 
-BITCOINS * btcusdt * usdhuf
+log_info(BITCOINS * btcusdt * usdhuf) ## TODO formatting
+log_eval(BITCOINS * btcusdt * usdhuf)
