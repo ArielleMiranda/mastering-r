@@ -32,9 +32,12 @@ tryCatch(binance_coins_prices()[symbol == 'BTC', usd],
 
 # use diff function
 get_bitcoin_price <- function(){}
-get_bitcoin_price <- function() {
+get_bitcoin_price <- function(retried = 0) {
   tryCatch(binance_coins_prices()[symbol == 'BTC', usd],
-           error = function(e) get_bitcoin_price())
+           error = function(e) {
+             # exponential backoff retries
+             Sys.sleep(1)
+             get_bitcoin_price(retried = retried + 1)})
 }
 get_bitcoin_price()
 
@@ -45,3 +48,8 @@ assert_number(btcusdt, lower = 1000)
 
 log_info(BITCOINS * btcusdt * usdhuf) ## TODO formatting
 log_eval(forint(BITCOINS * btcusdt * usdhuf))
+
+
+## install the created package from github
+library(devtools)
+install_github('ArielleMiranda/mr')
