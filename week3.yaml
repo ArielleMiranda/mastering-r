@@ -1,0 +1,3 @@
+ecommerce:
+  dbname: ecommerce.sqlite3
+  drv: !expr RSQLite::SQLite()
