@@ -53,3 +53,4 @@ log_eval(forint(BITCOINS * btcusdt * usdhuf))
 ## install the created package from github
 library(devtools)
 install_github('ArielleMiranda/mr')
+library(mr)
